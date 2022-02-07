@@ -799,7 +799,7 @@ export default class AstrologicView extends Vue {
     const alias = this.tabKeys[newVal];
     
     if (alias) {
-      const newPath = "/astro/" + alias;
+      const newPath = "/ui/" + alias;
       setTimeout(() => {
         this.makeSortable();
       }, 2000);

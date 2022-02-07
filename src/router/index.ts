@@ -14,9 +14,9 @@ const routes = [
     component: lazyLoad("Home"),
   },
   {
-    path: "/astro/:tab?/:subtab?",
-    name: "Testing",
-    component: lazyLoad("Testing"),
+    path: "/ui/:tab?/:subtab?",
+    name: "AstroUI",
+    component: lazyLoad("AstroUI"),
   },
   {
     path: "/compatibility/:tab?",

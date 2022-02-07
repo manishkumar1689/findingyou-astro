@@ -99,9 +99,9 @@ export default class App extends Vue {
 
   private version = 0.532;
 
-  private julianDate = currentJulianDate();
+  julianDate = currentJulianDate();
 
-  private mainMenuItems = [
+  mainMenuItems = [
     { to: "/manage", label: "Home", reload: true },
     { to: "/ui", label: "Astro" },
     { to: "/compatibility", label: "Compatibility Protocols" },
@@ -137,7 +137,9 @@ export default class App extends Vue {
     }
     this.loadDictionary();
     bus.$on("login", (valid: boolean) => {
-      this.isLoggedIn = true;
+      if (valid) {
+        this.isLoggedIn = true;
+      }
     });
     bus.$on("show-chart-sidebar", (active: boolean) => {
       if (active) {
@@ -154,14 +156,14 @@ export default class App extends Vue {
       assignAspectClass(this.window);
       bus.$emit("resize", true);
     });
-    window.addEventListener("keypress", (e) => {
+    window.addEventListener("keypress", (e: KeyboardEvent) => {
       switch (e.which) {
         case 13:
           exitFullScreen();
           break;
       }
     });
-    document.addEventListener("fullscreenchange", (e) => {
+    document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
         exitFullScreen();
       }
@@ -177,7 +179,7 @@ export default class App extends Vue {
     if (lexItems instanceof Array) {
       this.assignItems(lexItems);
     } else {
-      const data = fetchLexemes("").then((data) => {
+      fetchLexemes("").then((data) => {
         if (data.valid) {
           if (data.items instanceof Array) {
             this.assignItems(data.items);
@@ -309,7 +311,7 @@ export default class App extends Vue {
   get mainClassNames() {
     const { path } = this.$route;
     const parts = path.length > 2 ? path.substring(1).split("/") : ["home"];
-    const first = parts[0] === "testing" ? "astro" : parts[0];
+    const first = parts[0] === "ui" ? "astro" : parts[0];
     const cls = [first];
     if (parts.length > 1) {
       cls.push(parts.slice(0, 2).join("--"));
